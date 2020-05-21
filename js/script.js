@@ -15,11 +15,10 @@ setFocusToNameBox();
 
 
 
- const other= document.getElementById('other-input');
+
 
  const title=document.getElementById('title');
- const basics=document.getElementById('basics');
-         
+
 x = document.createElement('INPUT');
 x.classList.add('other');
 basics.appendChild(x);
@@ -35,4 +34,24 @@ x.style.display='none';
         }
  };
 
+const selectDesign = document.createElement('OPTION');
+selectDesign.classList.add('selectDesign');
+const color = document.getElementById('color');
+selectDesign.innerHTML="Please select a design option";
+color.insertBefore(selectDesign, color.firstChild);
+const colorOptions=color.children;
 
+for (var i=0; i < color.length; i+=1){
+    color[i].style.display='none';
+  
+}
+
+
+// for (let i = 0; i <= color.length; i++){
+//     document.getElementById('color')[i].style.display = 'none';
+//   };
+
+
+
+// If the user selects "Theme - JS Puns" then the color menu should only display "Cornflower Blue," "Dark Slate Grey," and "Gold."
+// If the user selects "Theme - I ♥ JS" then the color menu should only display "Tomato," "Steel Blue," and "Dim Grey."
