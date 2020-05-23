@@ -35,21 +35,45 @@ x.style.display='none';
  };
 
 const selectDesign = document.createElement('OPTION');
-selectDesign.classList.add('selectDesign');
 const color = document.getElementById('color');
+const colorOptions=color.children;
+const design = document.getElementById('design');
+selectDesign.classList.add('selectDesign');
 selectDesign.innerHTML="Please select a design option";
 color.insertBefore(selectDesign, color.firstChild);
-const colorOptions=color.children;
 
-for (var i=0; i < color.length; i+=1){
-    color[i].style.display='none';
-  
+
+// for (var i=0; i < color.length; i++){
+//     color[i].style.display='none';
+//     if (i != 7){color.options[i].selected=false
+//     } else {
+//         color.options[i].selected=true
+//     }
+// }
+// for (var i=0; i<color.length; i ++) {
+    
+//     if (color.options[i].innerText.includes('please')) 
+//     {color[i].style.display='block'; 
+//     color.options[7].selected=true;
+//     }  else 
+//     {color[i].style.display = 'none'
+// }
+// }
+
+for (var i=0; i < color.length; i++) {
+    if (design[i] === 0) {
+        color.options[0].selected=true;
+        color.options[1,2,3,4,5,6].selected=false
+} else if (design[i] <4 && design.options[i] > 0) {
+    color.options[i].style.display='block';
+    color.options[0,5,6].style.display='none';
+}
+else {
+    color.options[i].style.display='block';
+    color.options[0,1,2,3,4].style.display='none';
+}
 }
 
-
-// for (let i = 0; i <= color.length; i++){
-//     document.getElementById('color')[i].style.display = 'none';
-//   };
 
 
 
