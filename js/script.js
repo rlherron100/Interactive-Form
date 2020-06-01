@@ -37,14 +37,13 @@ const selectDesign = document.createElement('OPTION');      //creates an option 
 const color = document.getElementById('color');             //creates variable named 'color' with the value of the color selection
 const design = document.getElementById('design');           //creates variable named 'design' with the value of the design selection
 
+selectDesign.classList.add('selectDesign');                 //adds class to the selectDesign option element
+selectDesign.innerHTML="Please select a design option";     //adds html text to the selectDesign option
+color.insertBefore(selectDesign, color.firstChild);         //inserts the selectDesign element into the beginning of the color selection options list
+design.options[0].selected=true;                            //makes the default selected option selectDesign
 
-selectDesign.classList.add('selectDesign');     
-selectDesign.innerHTML="Please select a design option";
-color.insertBefore(selectDesign, color.firstChild);
-design.options[0].selected=true;
 
-
-for (let i=1; i < color.options.length; i++) {
+for (let i=1; i < color.options.length; i++) {              //a for loop that runs through each of the color options and hides all the options except the first
 if (design.options[0].selected=true) { 
     color.options[0].selected=true; 
     color.options[i].style.display='none';
@@ -52,9 +51,9 @@ if (design.options[0].selected=true) {
 
 }
 
-onchange = function changeDesignOptions () {
+onchange = function changeDesignOptions () {                //this onchange function shows or hides different color options depending on which design option is selected
     
-        if (design.options[1].selected) {
+        if (design.options[1].selected) {                   //this conditional hides all color options except those for the js puns design
             color.options[1].selected=true;
             color.options[0].style.display='none';
             color.options[4].style.display='none';
@@ -64,7 +63,7 @@ onchange = function changeDesignOptions () {
             color.options[2].style.display='block';
             color.options[3].style.display='block';
         }
-        else if (design.options[2].selected) {
+        else if (design.options[2].selected) {              //this conditional hides all color options except those for the I heart js design
             color.options[4].selected=true;
             color.options[0].style.display='none';
             color.options[1].style.display='none';
@@ -74,7 +73,7 @@ onchange = function changeDesignOptions () {
             color.options[5].style.display='block';
             color.options[6].style.display='block';
         }
-        else {
+        else {                                              //this conditional reiterates that if the design is changed back to default, all except the first color options will dissapear
             design.options[0].selected=true;
             color.options[0].selected=true;
             color.options[0].style.display='block';
@@ -87,4 +86,52 @@ onchange = function changeDesignOptions () {
 
         }
     }
+
+    const activityChecks = document.querySelectorAll('.activities input[type="checkbox"]');
+    const totalSpan = document.createElement('SPAN');
+    totalSpan.classList.add('total');
+    document.querySelector('.activities').appendChild(totalSpan);
+    totalSpan.innerHTML="Total: "
+
+
+
+
+// UNUSED CODE
+//     const mainConf = document.querySelector('input[name="all"]');
+//     const jsFrame = document.querySelector('input[name="js-frameworks"]');
+//     const jsLibs = document.querySelector('input[name="js-libs"]');
+//     const express = document.querySelector('input[name="express"]');
+//     const node = document.querySelector('input[name="node"]');
+//     const buildTools = document.querySelector('input[name="build-tools"]');
+//     const npm = document.querySelector('input[name="npm"]');
+
+//     const activities=document.querySelectorAll('input[type="checkbox"]');
+//     const time = document.querySelectorAll('input[data-day-and-time]');
+//     const checkName= document.querySelectorAll('input[type=name]');
+
+
+// function disableCheckBoxes () {
+//     for (i=0; i<activities.length; i++) {
+//         activities[i].addEventListener(change, () => {
+//            const targetedTime = event.target.getAttribute('data-day-and-time');
+
+//                     // if the name of the targeted checkbox is such and such, and the time is such and such, disable checkbox with "" name
+
+//            if (targetedTime===activities[i]) {
+//             console.log('hi')
+//            }
+//         })
+//     }
+// }
+
+
+
+// function disableCheckBoxes () {
+//     for (i=0; activities.length > i; i++) {
+//         if (time === activities[i].dataset.dayAndTime) {
+//             activities[i].disabled
+//         }
+//     }
+
+// }
 
