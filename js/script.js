@@ -103,7 +103,7 @@ onchange = function disableCheckBoxes(e) {
         let timeValue =  activityChecks[i].getAttribute('data-day-and-time');
         if (timeValue === dayAndTime && clicked.checked) {
                 activityChecks[i].disabled = true;
-                timeValue.checked.disabled=false;
+                clicked.disabled=false;
               
                 
         }
