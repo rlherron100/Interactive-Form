@@ -93,50 +93,33 @@ onchange = function changeDesignOptions () {                //this onchange func
     document.querySelector('.activities').appendChild(totalSpan);
     totalSpan.innerHTML =`Total = $0`;
 
-    function totalCost() {
-        let total = 0;
-        for (let i = 0; i < activityChecks.length; i++) {
-            if (activityChecks[i].checked) {
-                total += +activityChecks[i].getAttribute('data-cost');
-            }
-        }
-        return total;
-    }
+   
 
 onchange = function disableCheckBoxes(e) {
     const clicked = e.target;
     const dayAndTime = clicked.getAttribute('data-day-and-time');
-    
+    let total = 0;
     for (let i = 0; i < activityChecks.length; i++) {
-        let otherTime =  activityChecks[i].getAttribute('data-day-and-time');
-        if (otherTime === dayAndTime && clicked.checked) {
+        let timeValue =  activityChecks[i].getAttribute('data-day-and-time');
+        if (timeValue === dayAndTime && clicked.checked) {
                 activityChecks[i].disabled = true;
-                clicked.disabled=false;
+                timeValue.checked.disabled=false;
+              
+                
         }
         else {
             activityChecks[i].disabled = false
-        }
-         
-    }
+        } totalSpan.innerHTML =`Total = $${total}`;}
 
-} 
-onchange = function totaling (e) {
+
+        // for (let i = 0; i < activityChecks.length; i++) {
+        // if (activityChecks[i].checked)
+        // {total += +activityChecks[i].getAttribute('data-cost');}
+    // }
+ } 
+  
+
     
-        
-    const clicked = e.target;
-    const cost = clicked.getAttribute('data-cost');
-    const totalled= totalCost();
-    let total= '';
-    
-    for (let i =0; i<activityChecks.length; i++) {
-        
-        if (activityChecks[i].checked) {
-            total += +cost;
-        
-        }
-            
-        totalSpan.innerHTML =`Total = $${totalled}`;
-}}
 
     
     
@@ -146,10 +129,6 @@ onchange = function totaling (e) {
 
 
 
-
-
-//  onchange = 
-    
 
 
 // UNUSED CODE
