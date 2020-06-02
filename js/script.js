@@ -91,9 +91,65 @@ onchange = function changeDesignOptions () {                //this onchange func
     const totalSpan = document.createElement('SPAN');
     totalSpan.classList.add('total');
     document.querySelector('.activities').appendChild(totalSpan);
-    totalSpan.innerHTML="Total: "
+    totalSpan.innerHTML =`Total = $0`;
+
+    function totalCost() {
+        let total = 0;
+        for (let i = 0; i < activityChecks.length; i++) {
+            if (activityChecks[i].checked) {
+                total += +activityChecks[i].getAttribute('data-cost');
+            }
+        }
+        return total;
+    }
+
+onchange = function disableCheckBoxes(e) {
+    const clicked = e.target;
+    const dayAndTime = clicked.getAttribute('data-day-and-time');
+    
+    for (let i = 0; i < activityChecks.length; i++) {
+        let otherTime =  activityChecks[i].getAttribute('data-day-and-time');
+        if (otherTime === dayAndTime && clicked.checked) {
+                activityChecks[i].disabled = true;
+                clicked.disabled=false;
+        }
+        else {
+            activityChecks[i].disabled = false
+        }
+         
+    }
+
+} 
+onchange = function totaling (e) {
+    
+        
+    const clicked = e.target;
+    const cost = clicked.getAttribute('data-cost');
+    const totalled= totalCost();
+    let total= '';
+    
+    for (let i =0; i<activityChecks.length; i++) {
+        
+        if (activityChecks[i].checked) {
+            total += +cost;
+        
+        }
+            
+        totalSpan.innerHTML =`Total = $${totalled}`;
+}}
+
+    
+    
 
 
+
+
+
+
+
+
+//  onchange = 
+    
 
 
 // UNUSED CODE
