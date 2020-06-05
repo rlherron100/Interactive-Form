@@ -10,6 +10,11 @@ const payment = document.getElementById('payment');
 const creditCard=document.getElementById('credit-card');
 const payPal=document.getElementById('paypal');
 const bitCoin=document.getElementById('bitcoin');
+document.getElementById('name').placeholder = "Type name here...";
+document.getElementById('mail').placeholder = "example@email.com";
+document.getElementById('cc-num').placeholder= "0000 0000 0000 0000";
+document.getElementById('zip').placeholder= "00000";
+document.getElementById('cvv').placeholder= "000";
 otherInput = document.querySelector('.other');
 otherInput.style.display='none';
 selectDesign.classList.add('selectDesign');                 //adds class to the selectDesign option element
@@ -24,15 +29,86 @@ payPal.style.display='none';
 bitCoin.style.display='none';
 
 
+
+
+
 //REGEX SECTION
 
-const regexCheck = {
-    name: {},
-    mail: {},
+
+let validName = false;
+let validEmail = false;
+let validCardNum = false;
+let validZip = false;
+let validCvv = false;
+let name = document.getElementById('name');
+let mail = document.getElementById('mail');
+let fieldset = document.getElementById('basics');
+const invalidName =  document.createElement('LABEL');
+invalidName.classList.add('invalidName')
+
+fieldset.insertBefore(invalidName, fieldset.children[3]);
+invalidName.innerHTML ="Please enter a valid name.";
+invalidName.style.display='none';
+
+function nameValidator (inputName) {
+    return /^[a-z]+\s[a-z]+$/i.test(inputName);
+}
+
+name.addEventListener ('blur', () => {
+    
+    let userName = name.value;
+    
+    if (nameValidator(userName)) {
+        name.style.border = '2px solid green';
+        name.style.color = 'green';
+        invalidName.style.display= 'none';
+        document.querySelectorAll('.invalidName').forEach(function(a) {                         //forEach code snippet modifed from stackOverflow https://stackoverflow.com/questions/44984867/javascript-remove-elements-by-class-name/44984940
+            a.remove()
+          })
+        return validName = true;
+    } else {
+        name.style.border = '3px solid red';
+        invalidName.style.display='block';
+        return validName = false;
+    }
+    
+});
+
+const invalidEmail =  document.createElement('LABEL');
+    invalidEmail.classList.add('invalidEmail')
+    invalidEmail.innerHTML ="Please enter a valid email."
+    fieldset.insertBefore(invalidEmail, fieldset.children[6]);
+    invalidEmail.style.display= 'none';
+
+function emailValidator (inputEmail) {
+    return /^.+\@.+\..+$\s/i.test(inputEmail);
+}
+
+mail.addEventListener ('blur', () => {
+    let userEmail = mail.value;
+    
+;
+    
+    if (emailValidator(userEmail)) {
+        mail.style.border = '2px solid green';
+        mail.style.color = 'green';
+        invalidEmail.style.display= 'none';
+        document.querySelectorAll('.invalidEmail').forEach(function(a) {                        
+            a.remove()
+          })
+        return validEmail = true;
+    } else {
+        mail.style.border = '3px solid red';
+        invalidEmail.style.display= 'block';
+
+        return validEmail = false;
+    }
+    
+});
 
 
-};
 
+// -------------------
 
 
 
@@ -149,4 +225,6 @@ payment.onchange = function paymentOptionsToggle() {
             bitCoin.style.display='none';
         }
 }
+
+
 
