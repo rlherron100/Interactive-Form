@@ -95,7 +95,7 @@ invalidActivities.style.display='none';
 invalidccNum.classList.add('invalidccNum');
 invalidccNum.innnerHTML = "Please enter a valid Credit Card Number.";
 invalidccNum.style.color='red';
-fieldset.insertBefore(invalidccNum, fieldset.children[5]);
+creditCard.appendChild(invalidccNum);
 invalidccNum.style.display='none';
 
 // //Credit Card Zip Code Validator Element
