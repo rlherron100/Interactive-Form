@@ -149,7 +149,7 @@ option {
 }
 
 .interests input {
-	margin-bottom: 0;
+	margin-bottom: 1;
 }
 
 .credit-card {
@@ -164,6 +164,10 @@ option {
 	padding: 5px;
 	background: rgba(255, 255, 255, 0.1);
 	border-radius: 4px;
+}
+.activities {
+	margin-top: 5px;
+	
 }
 
 /* ================================= 

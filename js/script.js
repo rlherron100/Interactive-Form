@@ -1,4 +1,12 @@
 
+
+//TO DO
+// Correct the credit card information regexes
+// Figure out how to make the activity border top appear
+// Figure out how to make the zip and cvv error messages visible
+
+
+
 const form=document.querySelector('form');
 const title=document.getElementById('title');
 const selectDesign = document.createElement('OPTION');      //creates an option element
@@ -6,6 +14,8 @@ const color = document.getElementById('color');             //creates variable n
 const design = document.getElementById('design');           //creates variable named 'design' with the value of the design selection
 const activityChecks = document.querySelectorAll('.activities input[type="checkbox"]');
 const activities = document.getElementsByClassName('activities');
+activities[0].setAttribute('id', 'activities');
+const activitiesById = document.getElementById('activities');
 const totalSpan = document.createElement('SPAN');
 const payment = document.getElementById('payment');
 const creditCard=document.getElementById('credit-card');
@@ -34,7 +44,7 @@ bitCoin.style.display='none';
 
 
 
-document.querySelectorAll('.activities').setAttribute('id', 'activities'); //NEED TO GIVE AN ID ATTRIBUTE TO THE ACTIVITIES FIELDSET SO THAT I CAN INSERT A NODE UNDER IT
+// document.querySelectorAll('.activities').setAttribute('id', 'activities'); //NEED TO GIVE AN ID ATTRIBUTE TO THE ACTIVITIES FIELDSET SO THAT I CAN INSERT A NODE UNDER IT
 
 
 
@@ -67,30 +77,36 @@ const submit = document.getElementById('submit');
 //Name Validator Element
 invalidName.classList.add('invalidName')
 invalidName.innerHTML ="Please enter a valid name.";
+invalidName.style.color = 'red';
 invalidName.style.display='none';
 //Email Validator Element
 invalidEmail.classList.add('invalidEmail');
 invalidEmail.innerHTML ="Please enter a valid email.";
+invalidEmail.style.color = 'red';
 fieldset.insertBefore(invalidEmail, fieldset.children[5]);
 invalidEmail.style.display= 'none';
 //Activities Validator Element
 invalidActivities.classList.add('invalidActivities');
 invalidActivities.innerHTML= "You must select at least one activity.";
-activities.insertBefore(invalidActivities, activityChecks[0]);
+invalidActivities.style.color = 'red';
+activitiesById.insertBefore(invalidActivities, activitiesById[0]);
 invalidActivities.style.display='none';
 //Credit Card Number Validator Element
 invalidccNum.classList.add('invalidccNum');
 invalidccNum.innnerHTML = "Please enter a valid Credit Card Number.";
+invalidccNum.style.color='red';
 invalidccNum.style.display='none';
 ccDiv.insertBefore(invalidccNum, ccDiv.children[3]);
 //Credit Card Zip Code Validator Element
 invalidZip.classList.add('invalidZip');
 invalidZip.innerHTML= "Please enter a valip zip code.";
+invalidZip.style.color='red';
 invalidZip.style.display='none';
 ccDiv.insertBefore(invalidccNum, ccDiv.children[4]);
 //Credit Card CVV Validator Element
 invalidCVV.classList.add('invalidcvv');
 invalidCVV.innerHTML= "Please enter a valid CVV.";
+invalidCVV.style.color='red';
 invalidCVV.style.display='none';
 ccDiv.insertBefore(invalidccNum, ccDiv.children[5]);
 
@@ -104,9 +120,9 @@ function nameRegex (inputName) {
 function emailRegex (inputEmail) {
     return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(inputEmail); //source https://emailregex.com/
 }
-function ccNumRegex (inputCC) {/^[0-9]{13,16}$/.test(inputCC)};
-function zipRegex (inputZip) {/^[0-9]{5}(?:-[0-9]{4})?$/}; // from https://www.oreilly.com/library/view/regular-expressions-cookbook/9781449327453/ch04s14.html
-function cvvRegex (inputCVV) {/^[0-9]{3}$/};
+function ccNumRegex (inputCC) {/^\d{13,16}$/.test(inputCC)};
+function zipRegex (inputZip) {/^[0-9]{4}$/.test(inputZip)}; // from https://www.oreilly.com/library/view/regular-expressions-cookbook/9781449327453/ch04s14.html
+function cvvRegex (inputCVV) {/^[0-9]{3}$/.test(inputCVV)};
 //blur event form validators
 name.addEventListener ('blur', () => {nameValidator()});
 mail.addEventListener ('blur', () => { emailValidator()});
@@ -158,17 +174,16 @@ function emailValidator () {
 };
 
 function activityValidator () {
-    for (let i = 0; i< activityChecks.length; i++)
-        if (activityChecks[i].checked)
+
+        if (total !== 0)
         {
-        activityChecks.style.border = '2px solid green';
-        activityChecks.style.color='green';
-        document.querySelectorAll('.invalidActivities').forEach(function(a) {
-            a.style.display='none';
-        })
+        activitiesById.style.border = '2px solid green';
+        activitiesById.style.color='green';
+        
+            invalidActivities.style.display='none';
         return validActivities = true;
     } else {
-        activityChecks.style.border = '3px solid red';
+        activitiesById.style.border = '3px solid red';
         invalidActivities.style.display='block';
         return validActivities=false;
     }
@@ -179,7 +194,7 @@ function activityValidator () {
 
 function ccNumValidator () {let userccNum = ccNum.value;
         
-    
+    if (payment.children[1].selected) {
         
         if (ccNumRegex(userccNum)) {
             ccNum.style.border = '2px solid green';
@@ -193,12 +208,12 @@ function ccNumValidator () {let userccNum = ccNum.value;
             ccNum.style.border = '3px solid red';
             invalidccNum.style.display= 'block';
             return validccNum = false;
-        }}
+        }}}
 function zipValidator () {
         let userZip= zip.value;
         
             
-                
+            if (payment.children[1].selected) {
                 if (zipRegex(userZip)) {
                     zip.style.border = '2px solid green';
                     zip.style.color = 'green';
@@ -211,11 +226,11 @@ function zipValidator () {
                     zip.style.border = '3px solid red';
                     invalidZip.style.display= 'block';
                     return validZip = false;
-                }}
+                }}}
 function cvvValidator () {
          let userCvv= cvv.value;
         
-            
+         if (payment.children[1].selected) {
                 
                 if (cvvRegex(userCvv)) {
                     cvv.style.border = '2px solid green';
@@ -229,17 +244,18 @@ function cvvValidator () {
                     cvv.style.border = '3px solid red';
                     invalidCVV.style.display= 'block';
                     return validCvv = false;
-                }};
+                }}};
 
  
   form.addEventListener('submit', (e) => {
     nameValidator();
-    if (!nameValidator() && !emailValidator() && !activityValidator() && !ccNumValidator() && !zipValidator () && !cvvValidator())
+    if ((!nameValidator() && !emailValidator() && !activityValidator() && !ccNumValidator() && !zipValidator () && !cvvValidator()) || 
+    (!nameValidator() || !emailValidator() || !activityValidator() || !ccNumValidator() || !zipValidator () || !cvvValidator()))
    {
        e.preventDefault();
 
        window.scrollTo(0,0)}
-        
+        else {alert('you did it!')}
 });
 
 // -------------------
@@ -307,12 +323,12 @@ design.onchange = function changeDesignOptions () {                //this onchan
         }
     };
 
-   
+    let total = 0;
 
 onchange = function disableCheckBoxes(e) {
     const clicked = e.target;
     const dayAndTime = clicked.getAttribute('data-day-and-time');
-    let total = 0;
+    
 
     for (let i = 0; i < activityChecks.length; i++) {
         let timeValue =  activityChecks[i].getAttribute('data-day-and-time');
