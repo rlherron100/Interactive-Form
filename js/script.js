@@ -1,8 +1,7 @@
 
 
 //TO DO
-// Correct the credit card information regexes
-// Figure out how to make the activity border top appear
+
 // Figure out how to make the zip and cvv error messages visible
 
 
@@ -39,7 +38,8 @@ totalSpan.innerHTML =`Total = $0`;
 payment.options[1].selected=true;
 payPal.style.display='none';
 bitCoin.style.display='none';
-
+activitiesById.children[0].style.paddingBottom='60px';
+activitiesById.children[1].style.marginTop='-73px';
 
 
 
@@ -66,7 +66,7 @@ let ccNum= document.getElementById('cc-num');
 let zip = document.getElementById('zip');
 let cvv= document.getElementById('cvv');
 let fieldset = document.getElementById('basics');
-let ccDiv= document.getElementById('credit-card');
+
 const invalidName =  document.createElement('LABEL');
 const invalidEmail =  document.createElement('LABEL');
 const invalidActivities= document.createElement('LABEL');
@@ -95,20 +95,21 @@ invalidActivities.style.display='none';
 invalidccNum.classList.add('invalidccNum');
 invalidccNum.innnerHTML = "Please enter a valid Credit Card Number.";
 invalidccNum.style.color='red';
+fieldset.insertBefore(invalidccNum, fieldset.children[5]);
 invalidccNum.style.display='none';
-ccDiv.insertBefore(invalidccNum, ccDiv.children[3]);
-//Credit Card Zip Code Validator Element
-invalidZip.classList.add('invalidZip');
-invalidZip.innerHTML= "Please enter a valip zip code.";
-invalidZip.style.color='red';
-invalidZip.style.display='none';
-ccDiv.insertBefore(invalidccNum, ccDiv.children[4]);
-//Credit Card CVV Validator Element
-invalidCVV.classList.add('invalidcvv');
-invalidCVV.innerHTML= "Please enter a valid CVV.";
-invalidCVV.style.color='red';
-invalidCVV.style.display='none';
-ccDiv.insertBefore(invalidccNum, ccDiv.children[5]);
+
+// //Credit Card Zip Code Validator Element
+// invalidZip.classList.add('invalidZip');
+// invalidZip.innerHTML= "Please enter a valip zip code.";
+// invalidZip.style.color='red';
+// invalidZip.style.display='none';
+// ccDiv.insertBefore(invalidccNum, ccDiv.children[4]);
+// //Credit Card CVV Validator Element
+// invalidCVV.classList.add('invalidcvv');
+// invalidCVV.innerHTML= "Please enter a valid CVV.";
+// invalidCVV.style.color='red';
+// invalidCVV.style.display='none';
+// ccDiv.insertBefore(invalidccNum, ccDiv.children[5]);
 
 document.querySelector('button[type="submit"]').setAttribute('id', 'submit')
 fieldset.insertBefore(invalidName, fieldset.children[3]);
@@ -120,9 +121,15 @@ function nameRegex (inputName) {
 function emailRegex (inputEmail) {
     return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(inputEmail); //source https://emailregex.com/
 }
-function ccNumRegex (inputCC) {/^\d{13,16}$/.test(inputCC)};
-function zipRegex (inputZip) {/^[0-9]{4}$/.test(inputZip)}; // from https://www.oreilly.com/library/view/regular-expressions-cookbook/9781449327453/ch04s14.html
-function cvvRegex (inputCVV) {/^[0-9]{3}$/.test(inputCVV)};
+function ccNumRegex (inputCC) {
+    return /^\d{13,16}$/.test(inputCC)};
+
+function zipRegex (inputZip) {
+    return /^[0-9]{5}$/.test(inputZip)}; // from https://www.oreilly.com/library/view/regular-expressions-cookbook/9781449327453/ch04s14.html
+
+function cvvRegex (inputCVV) {
+    return /^[0-9]{3}$/.test(inputCVV)};
+
 //blur event form validators
 name.addEventListener ('blur', () => {nameValidator()});
 mail.addEventListener ('blur', () => { emailValidator()});
@@ -184,6 +191,7 @@ function activityValidator () {
         return validActivities = true;
     } else {
         activitiesById.style.border = '3px solid red';
+        activitiesById.children[1].style.borderTop ='3px solid red'
         invalidActivities.style.display='block';
         return validActivities=false;
     }
@@ -207,6 +215,7 @@ function ccNumValidator () {let userccNum = ccNum.value;
         } else {
             ccNum.style.border = '3px solid red';
             invalidccNum.style.display= 'block';
+            
             return validccNum = false;
         }}}
 function zipValidator () {
