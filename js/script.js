@@ -1,84 +1,70 @@
 
-
-//TO DO
-
-// Figure out how to make the zip and cvv error messages visible
-
-
-
-const form=document.querySelector('form');
-const title=document.getElementById('title');
+const form=document.querySelector('form');                  //gives a constant variable name to the form
+const title=document.getElementById('title');               //gives a constant variable name to the title
 const selectDesign = document.createElement('OPTION');      //creates an option element
 const color = document.getElementById('color');             //creates variable named 'color' with the value of the color selection
 const design = document.getElementById('design');           //creates variable named 'design' with the value of the design selection
-const activityChecks = document.querySelectorAll('.activities input[type="checkbox"]');
-const activities = document.getElementsByClassName('activities');
-activities[0].setAttribute('id', 'activities');
-const activitiesById = document.getElementById('activities');
-const totalSpan = document.createElement('SPAN');
-const payment = document.getElementById('payment');
-const creditCard=document.getElementById('credit-card');
-const payPal=document.getElementById('paypal');
-const bitCoin=document.getElementById('bitcoin');
-form.classList.add('form');
-document.getElementById('name').placeholder = "Type name here...";
-document.getElementById('mail').placeholder = "example@email.com";
-document.getElementById('cc-num').placeholder= "0000 0000 0000 0000";
-document.getElementById('zip').placeholder= "00000";
-document.getElementById('cvv').placeholder= "000";
-otherInput = document.querySelector('.other');
-otherInput.style.display='none';
+const activityChecks = document.querySelectorAll('.activities input[type="checkbox"]'); //Variable for each of the checkbox elements specifically
+const activities = document.getElementsByClassName('activities');       //Variable for the entire activities section, not just the checkboxes
+activities[0].setAttribute('id', 'activities');             //gives an id attribute to activities
+const activitiesById = document.getElementById('activities');   //this allows the activities section to be manipulated, as a class attribute returns a collection
+const totalSpan = document.createElement('SPAN');           //creates the total span
+const payment = document.getElementById('payment');         //gives a constant variable name to the payment selection
+const creditCard=document.getElementById('credit-card');    //gives constant variable name to the credit card div
+const payPal=document.getElementById('paypal');             //gives constant variable name to the paypal div
+const bitCoin=document.getElementById('bitcoin');           //gives constant variable name to the bitcoin div
+form.classList.add('form');                                 //adds class name to the form element for easier targeting
+const otherInput = document.querySelector('.other');        //gives constant variable name to the other text input field
+otherInput.style.display='none';                            //hides other field by default
 selectDesign.classList.add('selectDesign');                 //adds class to the selectDesign option element
 selectDesign.innerHTML="Please select a design option";     //adds html text to the selectDesign option
 color.insertBefore(selectDesign, color.firstChild);         //inserts the selectDesign element into the beginning of the color selection options list
 design.options[0].selected=true;                            //makes the default selected option selectDesign
-totalSpan.classList.add('total');
-document.querySelector('.activities').appendChild(totalSpan);
-totalSpan.innerHTML =`Total = $0`;
-payment.options[1].selected=true;
-payPal.style.display='none';
-bitCoin.style.display='none';
-activitiesById.children[0].style.paddingBottom='60px';
-activitiesById.children[1].style.marginTop='-73px';
+totalSpan.classList.add('total');                           //adds class attribute to the totalSpan for easier targeting
+document.querySelector('.activities').appendChild(totalSpan); //appends totalSpan to the activities section
+totalSpan.innerHTML =`Total = $0`;                          //sets default text of totalSpan to Total = $0
+payment.options[1].selected=true;                           //sets the default payment option to credit card
+payPal.style.display='none';                                //hides paypal by default
+bitCoin.style.display='none';                               //hides bitcoin by default
+activitiesById.children[0].style.paddingBottom='60px';      //slight alteration to the Activities legend in order to fix border display issue
+activitiesById.children[1].style.marginTop='-73px';         //slight alteration to the first checkboxes margin in order to fix border display issue
 
-
-
-
-// document.querySelectorAll('.activities').setAttribute('id', 'activities'); //NEED TO GIVE AN ID ATTRIBUTE TO THE ACTIVITIES FIELDSET SO THAT I CAN INSERT A NODE UNDER IT
-
-
-
-
+//Placeholders for input fields
+document.getElementById('name').placeholder = "Type name here..."; 
+document.getElementById('mail').placeholder = "example@email.com";
+document.getElementById('cc-num').placeholder= "0000 0000 0000 0000";
+document.getElementById('zip').placeholder= "00000";
+document.getElementById('cvv').placeholder= "000";
 
 
 //REGEX SECTION
 
-
+//sets default for each section to false
 let validName = false;
 let validEmail = false;
 let validActivities = false;
 let validCardNum = false;
 let validZip = false;
 let validCvv = false;
+//gives variable names to the different sections that need validating
 let name = document.getElementById('name');
 let mail = document.getElementById('mail');
 let ccNum= document.getElementById('cc-num');
 let zip = document.getElementById('zip');
 let cvv= document.getElementById('cvv');
 let fieldset = document.getElementById('basics');
-
+//creates label elements for the validators
 const invalidName =  document.createElement('LABEL');
 const invalidEmail =  document.createElement('LABEL');
 const invalidActivities= document.createElement('LABEL');
-const invalidccNum = document.createElement('LABEL');
-const invalidZip = document.createElement('LABEL');
-const invalidCVV = document.createElement('LABEL');
 const submit = document.getElementById('submit');
+
 //Name Validator Element
 invalidName.classList.add('invalidName')
 invalidName.innerHTML ="Please enter a valid name.";
 invalidName.style.color = 'red';
 invalidName.style.display='none';
+fieldset.insertBefore(invalidName, fieldset.children[3]);
 //Email Validator Element
 invalidEmail.classList.add('invalidEmail');
 invalidEmail.innerHTML ="Please enter a valid email.";
@@ -91,42 +77,25 @@ invalidActivities.innerHTML= "You must select at least one activity.";
 invalidActivities.style.color = 'red';
 activitiesById.insertBefore(invalidActivities, activitiesById[0]);
 invalidActivities.style.display='none';
-//Credit Card Number Validator Element
-invalidccNum.classList.add('invalidccNum');
-invalidccNum.innnerHTML = "Please enter a valid Credit Card Number.";
-invalidccNum.style.color='red';
-creditCard.appendChild(invalidccNum);
-invalidccNum.style.display='none';
-
-// //Credit Card Zip Code Validator Element
-// invalidZip.classList.add('invalidZip');
-// invalidZip.innerHTML= "Please enter a valip zip code.";
-// invalidZip.style.color='red';
-// invalidZip.style.display='none';
-// ccDiv.insertBefore(invalidccNum, ccDiv.children[4]);
-// //Credit Card CVV Validator Element
-// invalidCVV.classList.add('invalidcvv');
-// invalidCVV.innerHTML= "Please enter a valid CVV.";
-// invalidCVV.style.color='red';
-// invalidCVV.style.display='none';
-// ccDiv.insertBefore(invalidccNum, ccDiv.children[5]);
-
+//Submit Button Id Attribution
 document.querySelector('button[type="submit"]').setAttribute('id', 'submit')
-fieldset.insertBefore(invalidName, fieldset.children[3]);
 
 
+// Regex for Name Field
 function nameRegex (inputName) {
     return /^[a-z]+\s[a-z]+$/i.test(inputName);
 }
+// Regex for Email Field
 function emailRegex (inputEmail) {
     return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(inputEmail); //source https://emailregex.com/
 }
+// Regex for CC Number Field
 function ccNumRegex (inputCC) {
     return /^\d{13,16}$/.test(inputCC)};
-
+// Regex for Zip Field
 function zipRegex (inputZip) {
     return /^[0-9]{5}$/.test(inputZip)}; // from https://www.oreilly.com/library/view/regular-expressions-cookbook/9781449327453/ch04s14.html
-
+// Regex for CVV Field
 function cvvRegex (inputCVV) {
     return /^[0-9]{3}$/.test(inputCVV)};
 
@@ -137,7 +106,7 @@ ccNum.addEventListener('blur', () => {ccNumValidator()})
 zip.addEventListener('blur', () => {zipValidator()} );
 cvv.addEventListener('blur', () => {cvvValidator()} );
 
-
+//Validator function for Name Field
 function nameValidator() {
     
     let userName = name.value;
@@ -157,7 +126,7 @@ function nameValidator() {
     }
     
 };
-
+//Validator function for Email Field
 function emailValidator () {
             let userEmail = mail.value;
         
@@ -179,10 +148,10 @@ function emailValidator () {
         }
         
 };
-
+//Validator function for Activity Field
 function activityValidator () {
 
-        if (total !== 0)
+        if (total !== 0)                    //if the total value is 0, then no checkbox was selected, and the validator returns false
         {
         activitiesById.style.border = '2px solid green';
         activitiesById.style.color='green';
@@ -196,15 +165,12 @@ function activityValidator () {
         return validActivities=false;
     }
 }
-
-
-
-
+//Validator function for Credit Card Number Field
 function ccNumValidator () {let userccNum = ccNum.value;
         
     if (payment.children[1].selected) {
         
-        if (ccNumRegex(userccNum)) {
+        if (ccNumRegex(userccNum)) {                            //I was having a hard time with display issues on the validator messages for this, zip, and CVV, so I put the error message inside the placeholder
             ccNum.style.border = '2px solid green';
             ccNum.style.color = 'green';
             invalidccNum.style.display= 'none';
@@ -214,10 +180,11 @@ function ccNumValidator () {let userccNum = ccNum.value;
             return validccNum = true;
         } else {
             ccNum.style.border = '3px solid red';
-            invalidccNum.style.display= 'block';
+            document.getElementById('cc-num').placeholder= "Invalid Credit Card #";
             
             return validccNum = false;
         }}}
+//Validator function for Zip Field
 function zipValidator () {
         let userZip= zip.value;
         
@@ -233,15 +200,16 @@ function zipValidator () {
                     return validZip = true;
                 } else {
                     zip.style.border = '3px solid red';
-                    invalidZip.style.display= 'block';
+                    document.getElementById('zip').placeholder= "Invalid Zip";
                     return validZip = false;
                 }}}
+//Validator function for CVV Field
 function cvvValidator () {
          let userCvv= cvv.value;
         
          if (payment.children[1].selected) {
                 
-                if (cvvRegex(userCvv)) {
+                if (cvvRegex(userCvv)) {                            
                     cvv.style.border = '2px solid green';
                     cvv.style.color = 'green';
                     invalidCVV.style.display= 'none';
@@ -251,11 +219,11 @@ function cvvValidator () {
                     return validCvv = true;
                 } else {
                     cvv.style.border = '3px solid red';
-                    invalidCVV.style.display= 'block';
+                    document.getElementById('cvv').placeholder= "Invalid CVV";
                     return validCvv = false;
                 }}};
 
- 
+ // Prevents submit default if any or all of validators return false
   form.addEventListener('submit', (e) => {
     nameValidator();
     if ((!nameValidator() && !emailValidator() && !activityValidator() && !ccNumValidator() && !zipValidator () && !cvvValidator()) || 
@@ -332,18 +300,18 @@ design.onchange = function changeDesignOptions () {                //this onchan
         }
     };
 
-    let total = 0;
+    let total = 0; //sets default of total to $0
 
-onchange = function disableCheckBoxes(e) {
+onchange = function disableCheckBoxes(e) {                  //this function disables checkboxes whose day and time attribute conflicts with the selected checkboxes
     const clicked = e.target;
     const dayAndTime = clicked.getAttribute('data-day-and-time');
     
 
-    for (let i = 0; i < activityChecks.length; i++) {
+    for (let i = 0; i < activityChecks.length; i++) {                           //runs through all checkboxes and matches their data-day-and-time values
         let timeValue =  activityChecks[i].getAttribute('data-day-and-time');
         if (timeValue === dayAndTime) {
         
-                if (clicked.checked) {
+                if (clicked.checked) {                                          //if a day and time value is matched, the unchecked box is disabled
                     activityChecks[i].disabled=true;
                     clicked.disabled=false;
                 }
@@ -351,33 +319,33 @@ onchange = function disableCheckBoxes(e) {
                 
         }
 
-            if (activityChecks[i].checked)
+            if (activityChecks[i].checked)                                  //adds selected checkboxes data-cost value to the total
             {total += +activityChecks[i].getAttribute('data-cost');}
          totalSpan.innerHTML =`Total = $${total}`;
 
     }
  };
   
-
+//This onchange event hides or displays payment options depending on what payment option is selected in the drop down menu
 payment.onchange = function paymentOptionsToggle() {
     
-        if (payment.options[1].selected) {
+        if (payment.options[1].selected) {                  //if credit card is selected, hides paypal and bitcoin options
             creditCard.style.display='block';
             payPal.style.display= 'none';
             bitCoin.style.display='none';
         }
-        else if (payment.options[2].selected) {
+        else if (payment.options[2].selected) {             //if payPal is selected, hides Credit Card and Bitcoin options
             creditCard.style.display='none';
             payPal.style.display= 'block';
             bitCoin.style.display='none';
         }
-        else if (payment.options[3].selected) {
+        else if (payment.options[3].selected) {             //if bitCoin is selected, hides Credit Card and PayPal options
             creditCard.style.display='none';
             payPal.style.display= 'none';
             bitCoin.style.display='block';
         }
         else {
-            creditCard.style.display='none';
+            creditCard.style.display='none';                //if the "please select" option is selected, all options are hidden
             payPal.style.display= 'none';
             bitCoin.style.display='none';
         }
