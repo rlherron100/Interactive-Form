@@ -69,7 +69,7 @@ fieldset.insertBefore(invalidName, fieldset.children[3]);
 invalidEmail.classList.add('invalidEmail');
 invalidEmail.innerHTML ="Please enter a valid email.";
 invalidEmail.style.color = 'red';
-fieldset.insertBefore(invalidEmail, fieldset.children[5]);
+fieldset.insertBefore(invalidEmail, fieldset.children[6]);
 invalidEmail.style.display= 'none';
 //Activities Validator Element
 invalidActivities.classList.add('invalidActivities');
