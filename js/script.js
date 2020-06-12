@@ -1,4 +1,10 @@
 
+//TO DO
+//Activities unchecked no error message shows
+//total keeps adding for each button clicked
+
+
+
 const form=document.querySelector('form');                  //gives a constant variable name to the form
 const title=document.getElementById('title');               //gives a constant variable name to the title
 const selectDesign = document.createElement('OPTION');      //creates an option element
@@ -151,11 +157,11 @@ function emailValidator () {
 //Validator function for Activity Field
 function activityValidator () {
 
-        if (total !== 0)                    //if the total value is 0, then no checkbox was selected, and the validator returns false
+        if (totalSpan.innerHTML != `Total = $0`)                    //if the total value is 0, then no checkbox was selected, and the validator returns false
         {
         activitiesById.style.border = '2px solid green';
         activitiesById.style.color='green';
-        
+        activitiesById.children[1].style.borderTop ='3px solid green'
             invalidActivities.style.display='none';
         return validActivities = true;
     } else {
@@ -173,10 +179,8 @@ function ccNumValidator () {let userccNum = ccNum.value;
         if (ccNumRegex(userccNum)) {                            //I was having a hard time with display issues on the validator messages for this, zip, and CVV, so I put the error message inside the placeholder
             ccNum.style.border = '2px solid green';
             ccNum.style.color = 'green';
-            invalidccNum.style.display= 'none';
-            document.querySelectorAll('.invalidccNum').forEach(function(a) {                        
-                a.style.display='none';
-            })
+            
+            
             return validccNum = true;
         } else {
             ccNum.style.border = '3px solid red';
@@ -193,10 +197,8 @@ function zipValidator () {
                 if (zipRegex(userZip)) {
                     zip.style.border = '2px solid green';
                     zip.style.color = 'green';
-                    invalidZip.style.display= 'none';
-                    document.querySelectorAll('.invalidZip').forEach(function(a) {                        
-                        a.style.display='none';
-                    })
+                    
+                   
                     return validZip = true;
                 } else {
                     zip.style.border = '3px solid red';
@@ -212,10 +214,9 @@ function cvvValidator () {
                 if (cvvRegex(userCvv)) {                            
                     cvv.style.border = '2px solid green';
                     cvv.style.color = 'green';
-                    invalidCVV.style.display= 'none';
-                    document.querySelectorAll('.invalidcvv').forEach(function(a) {                        
-                        a.style.display='none';
-                    })
+
+                    
+                    
                     return validCvv = true;
                 } else {
                     cvv.style.border = '3px solid red';
@@ -232,7 +233,7 @@ function cvvValidator () {
        e.preventDefault();
 
        window.scrollTo(0,0)}
-        else {alert('you did it!')}
+        
 });
 
 // -------------------
@@ -300,31 +301,31 @@ design.onchange = function changeDesignOptions () {                //this onchan
         }
     };
 
-    let total = 0; //sets default of total to $0
 
-onchange = function disableCheckBoxes(e) {                  //this function disables checkboxes whose day and time attribute conflicts with the selected checkboxes
+onchange = function disableCheckBoxes(e) {
     const clicked = e.target;
     const dayAndTime = clicked.getAttribute('data-day-and-time');
-    
+    let total = 0;
 
-    for (let i = 0; i < activityChecks.length; i++) {                           //runs through all checkboxes and matches their data-day-and-time values
+    for (let i = 0; i < activityChecks.length; i++) {
         let timeValue =  activityChecks[i].getAttribute('data-day-and-time');
         if (timeValue === dayAndTime) {
-        
-                if (clicked.checked) {                                          //if a day and time value is matched, the unchecked box is disabled
-                    activityChecks[i].disabled=true;
-                    clicked.disabled=false;
-                }
-              else {activityChecks[i].disabled=false}
-                
-        }
 
-            if (activityChecks[i].checked)                                  //adds selected checkboxes data-cost value to the total
-            {total += +activityChecks[i].getAttribute('data-cost');}
-         totalSpan.innerHTML =`Total = $${total}`;
+            if (clicked.checked) {
+                activityChecks[i].disabled=true;
+                clicked.disabled=false;
+            }
+          else {activityChecks[i].disabled=false}
 
     }
- };
+    if (activityChecks[i].checked)                                          //adds selected checkboxes data-cost value to the total
+    {total += +activityChecks[i].getAttribute('data-cost');}
+
+ totalSpan.innerHTML =`Total = $${total}`;
+    
+}
+
+};
   
 //This onchange event hides or displays payment options depending on what payment option is selected in the drop down menu
 payment.onchange = function paymentOptionsToggle() {
