@@ -1,10 +1,4 @@
 
-//TO DO
-//Activities unchecked no error message shows
-//total keeps adding for each button clicked
-
-
-
 const form=document.querySelector('form');                  //gives a constant variable name to the form
 const title=document.getElementById('title');               //gives a constant variable name to the title
 const selectDesign = document.createElement('OPTION');      //creates an option element
