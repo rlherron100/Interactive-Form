@@ -28,7 +28,7 @@ payPal.style.display='none';                                //hides paypal by de
 bitCoin.style.display='none';                               //hides bitcoin by default
 activitiesById.children[0].style.paddingBottom='60px';      //slight alteration to the Activities legend in order to fix border display issue
 activitiesById.children[1].style.marginTop='-73px';         //slight alteration to the first checkboxes margin in order to fix border display issue
-
+payment.options[0].disabled = true;                         //disables the select option for payment options
 //Placeholders for input fields
 document.getElementById('name').placeholder = "Type name here..."; 
 document.getElementById('mail').placeholder = "example@email.com";
@@ -43,7 +43,7 @@ document.getElementById('cvv').placeholder= "000";
 let validName = false;
 let validEmail = false;
 let validActivities = false;
-let validCardNum = false;
+let validccNum= false;
 let validZip = false;
 let validCvv = false;
 //gives variable names to the different sections that need validating
@@ -176,12 +176,15 @@ function ccNumValidator () {let userccNum = ccNum.value;
             
             
             return validccNum = true;
+        
         } else {
             ccNum.style.border = '3px solid red';
             document.getElementById('cc-num').placeholder= "Invalid Credit Card #";
             
             return validccNum = false;
-        }}}
+        }}
+        else {return validccNum = true;}
+    }
 //Validator function for Zip Field
 function zipValidator () {
         let userZip= zip.value;
@@ -198,7 +201,9 @@ function zipValidator () {
                     zip.style.border = '3px solid red';
                     document.getElementById('zip').placeholder= "Invalid Zip";
                     return validZip = false;
-                }}}
+                }}
+                else {return validZip = true;}
+            }
 //Validator function for CVV Field
 function cvvValidator () {
          let userCvv= cvv.value;
@@ -216,17 +221,26 @@ function cvvValidator () {
                     cvv.style.border = '3px solid red';
                     document.getElementById('cvv').placeholder= "Invalid CVV";
                     return validCvv = false;
-                }}};
+                }}
+                else {return validCvv = true;}
+            };
+
+                
 
  // Prevents submit default if any or all of validators return false
   form.addEventListener('submit', (e) => {
     nameValidator();
-    if ((!nameValidator() && !emailValidator() && !activityValidator() && !ccNumValidator() && !zipValidator () && !cvvValidator()) || 
-    (!nameValidator() || !emailValidator() || !activityValidator() || !ccNumValidator() || !zipValidator () || !cvvValidator()))
+    if ((!nameValidator && !emailValidator && activityValidator && !paymentSelectValidator) ||
+     (!nameValidator || !emailValidator || activityValidator || !paymentSelectValidator))
+     {e.preventDefault();
+        window.scrollTo(0,0)}
+    else if
+    ((!nameValidator() && !emailValidator() && !activityValidator() && !ccNumValidator() && !zipValidator () && !cvvValidator() && paymentSelectValidator) || 
+    (!nameValidator() || !emailValidator() || !activityValidator() || !ccNumValidator() || !zipValidator () || !cvvValidator() || paymentSelectValidator))
    {
        e.preventDefault();
-
        window.scrollTo(0,0)}
+       
         
 });
 
@@ -320,7 +334,7 @@ onchange = function disableCheckBoxes(e) {
 }
 
 };
-  
+  let paymentSelectValidator = true;
 //This onchange event hides or displays payment options depending on what payment option is selected in the drop down menu
 payment.onchange = function paymentOptionsToggle() {
     
@@ -328,20 +342,19 @@ payment.onchange = function paymentOptionsToggle() {
             creditCard.style.display='block';
             payPal.style.display= 'none';
             bitCoin.style.display='none';
+            paymentSelectValidator = true;
         }
         else if (payment.options[2].selected) {             //if payPal is selected, hides Credit Card and Bitcoin options
             creditCard.style.display='none';
             payPal.style.display= 'block';
             bitCoin.style.display='none';
+            paymentSelectValidator = false;
         }
         else if (payment.options[3].selected) {             //if bitCoin is selected, hides Credit Card and PayPal options
             creditCard.style.display='none';
             payPal.style.display= 'none';
             bitCoin.style.display='block';
+            paymentSelectValidator = false;
         }
-        else {
-            creditCard.style.display='none';                //if the "please select" option is selected, all options are hidden
-            payPal.style.display= 'none';
-            bitCoin.style.display='none';
-        }
+ 
 }
