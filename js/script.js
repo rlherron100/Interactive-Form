@@ -230,11 +230,12 @@ function cvvValidator () {
  // Prevents submit default if any or all of validators return false
   form.addEventListener('submit', (e) => {
     nameValidator();
-    if ((!nameValidator && !emailValidator && activityValidator && !paymentSelectValidator) ||
-     (!nameValidator || !emailValidator || activityValidator || !paymentSelectValidator))
-     {e.preventDefault();
-        window.scrollTo(0,0)}
-    else if
+    emailValidator();
+    activityValidator();
+    ccNumValidator();
+    zipValidator ();
+    cvvValidator();
+   if
     ((!nameValidator() && !emailValidator() && !activityValidator() && !ccNumValidator() && !zipValidator () && !cvvValidator() && paymentSelectValidator) || 
     (!nameValidator() || !emailValidator() || !activityValidator() || !ccNumValidator() || !zipValidator () || !cvvValidator() || paymentSelectValidator))
    {
