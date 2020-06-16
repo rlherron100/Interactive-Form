@@ -225,23 +225,26 @@ function cvvValidator () {
                 else {return validCvv = true;}
             };
 
-                
-
+        
  // Prevents submit default if any or all of validators return false
   form.addEventListener('submit', (e) => {
+    
+    if (paymentSelectValidator) {
     nameValidator();
     emailValidator();
     activityValidator();
     ccNumValidator();
     zipValidator ();
     cvvValidator();
-   if
-    ((!nameValidator() && !emailValidator() && !activityValidator() && !ccNumValidator() && !zipValidator () && !cvvValidator() && paymentSelectValidator) || 
-    (!nameValidator() || !emailValidator() || !activityValidator() || !ccNumValidator() || !zipValidator () || !cvvValidator() || paymentSelectValidator))
-   {
-       e.preventDefault();
-       window.scrollTo(0,0)}
-       
+        if ((!nameValidator() && !emailValidator() && !activityValidator()  && !ccNumValidator() && !zipValidator () && !cvvValidator())
+        ||(!ccNumValidator() || !zipValidator () || !cvvValidator() || !nameValidator() || !emailValidator() || !activityValidator()))
+            { e.preventDefault();
+                window.scrollTo(0,0)}}
+        
+    else if ((!nameValidator() && !emailValidator() && !activityValidator()) || 
+        (!nameValidator() || !emailValidator() || !activityValidator()))
+        { e.preventDefault();
+            window.scrollTo(0,0)}
         
 });
 
