@@ -14,7 +14,10 @@ const creditCard=document.getElementById('credit-card');    //gives constant var
 const payPal=document.getElementById('paypal');             //gives constant variable name to the paypal div
 const bitCoin=document.getElementById('bitcoin');           //gives constant variable name to the bitcoin div
 form.classList.add('form');                                 //adds class name to the form element for easier targeting
-const otherInput = document.querySelector('.other');        //gives constant variable name to the other text input field
+const otherInput = document.querySelector('.other');   
+
+
+//gives constant variable name to the other text input field
 otherInput.style.display='none';                            //hides other field by default
 selectDesign.classList.add('selectDesign');                 //adds class to the selectDesign option element
 selectDesign.innerHTML="Please select a design option";     //adds html text to the selectDesign option
@@ -28,7 +31,9 @@ payPal.style.display='none';                                //hides paypal by de
 bitCoin.style.display='none';                               //hides bitcoin by default
 activitiesById.children[0].style.paddingBottom='60px';      //slight alteration to the Activities legend in order to fix border display issue
 activitiesById.children[1].style.marginTop='-73px';         //slight alteration to the first checkboxes margin in order to fix border display issue
-payment.options[0].disabled = true;                         //disables the select option for payment options
+payment.options[0].disabled = true;   
+
+//disables the select option for payment options
 //Placeholders for input fields
 document.getElementById('name').placeholder = "Type name here..."; 
 document.getElementById('mail').placeholder = "example@email.com";
